@@ -1,17 +1,27 @@
-# PostgreSQL-challenge
 CREATE TABLE IF NOT EXISTS departments
 (
     dept_no CHARACTER(4) NOT NULL,
     dept_name VARCHAR(50),
     PRIMARY KEY(dept_no)
 );
+CREATE TABLE IF NOT EXISTS salaries
+(
+    emp_no INTEGER NOT NULL,
+    salary INTEGER,
+    PRIMARY KEY(emp_no)
+);
 
 CREATE TABLE IF NOT EXISTS dept_emp
 (
     emp_no INTEGER NOT NULL,
     dept_no CHARACTER(4),
-    PRIMARY KEY(emp_no)
+    PRIMARY KEY(emp_no, dept_no)
 );
+ALTER TABLE dept_emp
+    ADD    FOREIGN KEY (emp_no)
+    REFERENCES salaries(emp_no)
+    MATCH SIMPLE
+;
 ALTER TABLE dept_emp
     ADD    FOREIGN KEY (dept_no)
     REFERENCES departments(dept_no)
@@ -37,7 +47,7 @@ CREATE TABLE IF NOT EXISTS employees
 );
 ALTER TABLE employees
     ADD    FOREIGN KEY (emp_no)
-    REFERENCES dept_emp(emp_no)
+    REFERENCES salaries(emp_no)
     MATCH SIMPLE
 ;
 ALTER TABLE employees
@@ -45,17 +55,12 @@ ALTER TABLE employees
     REFERENCES titles(title_id)
     MATCH SIMPLE
 ;
-CREATE TABLE IF NOT EXISTS salaries
-(
-    emp_no INTEGER NOT NULL,
-    salary INTEGER,
-    PRIMARY KEY(emp_no)
-);
-ALTER TABLE salaries
-    ADD    FOREIGN KEY (emp_no)
-    REFERENCES dept_emp(emp_no)
-    MATCH SIMPLE
-;
+
 
 
 -- Create Indexes
+SELECT * FROM departments;
+SELECT * FROM salaries;
+SELECT * FROM titles;
+SELECT * FROM dept_emp;
+SELECT * FROM employees;
