@@ -56,7 +56,22 @@ ALTER TABLE employees
     MATCH SIMPLE
 ;
 
+CREATE TABLE IF NOT EXISTS dept_managers
+(
+    emp_no INTEGER NOT NULL,
+    dept_no VARCHAR(50)
+);
+ALTER TABLE dept_managers
+    ADD    FOREIGN KEY (emp_no)
+    REFERENCES employees(emp_no)
+    MATCH SIMPLE
+;
 
+ALTER TABLE dept_managers
+    ADD    FOREIGN KEY (dept_no)
+    REFERENCES departments(dept_no)
+    MATCH SIMPLE
+;
 
 -- Create Indexes
 SELECT * FROM departments;
